@@ -17,22 +17,22 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: api-project-657640052442
+          project_id: quicknews-2f601
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
       - name: Build Docker image
         run: |
-          docker build -t gcr.io/api-project-657640052442/ .
+          docker build -t gcr.io/quicknews-2f601/quicknews-app .
 
       - name: Push Docker image
         run: |
-          docker push gcr.io/api-project-657640052442/quicknews-app
+          docker push gcr.io/quicknews-2f601/quicknews-app
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy quicknews-app \
-            --image gcr.io/api-project-657640052442/quicknews-app \
+            --image gcr.io/quicknews-2f601/quicknews-app \
             --region asia-south1 \
             --platform managed \
             --allow-unauthenticated \
