@@ -4,6 +4,7 @@ on: [push]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     env:
       PROJECT_ID: myapiproject-deployfirst-1
       REGION: us
@@ -14,21 +15,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set IMAGE_URI
-        run: |
-          echo "IMAGE_URI=us-docker.pkg.dev/${PROJECT_ID}/${REPO}/${IMAGE}:latest" >> $GITHUB_ENV
-
       - name: Authenticate to GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
+
+      - name: Set up gcloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           project_id: ${{ env.PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+          # (optional) install_components: 'beta'
 
       - name: Configure Docker for Artifact Registry
         run: |
           gcloud auth configure-docker us-docker.pkg.dev --quiet
-          gcloud auth configure-docker --quiet
 
       - name: Build Docker image
         run: docker build -t $IMAGE_URI .
