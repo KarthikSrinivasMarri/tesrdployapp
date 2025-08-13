@@ -27,12 +27,12 @@ jobs:
 
       - name: Push Docker image
         run: |
-          docker push gcr.io/api-project-657640052442/deploymenttest
+          docker push gcr.io/api-project-657640052442/quicknews-app
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy quicknews-app \
-            --image gcr.io/api-project-657640052442/deploymenttest \
+            --image gcr.io/api-project-657640052442/quicknews-app \
             --region asia-south1 \
             --platform managed \
             --allow-unauthenticated \
