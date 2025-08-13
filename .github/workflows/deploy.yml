@@ -25,8 +25,11 @@ jobs:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           export_default_credentials: true
 
-      - name: Configure Docker
-        run: gcloud auth configure-docker us-docker.pkg.dev gcr.io --quiet
+      - name: Configure Docker for Artifact Registry & GCR
+        run: |
+            gcloud auth configure-docker \
+            --quiet \
+            --registry="us-docker.pkg.dev,gcr.io"
 
       - name: Build Docker image
         run: docker build -t $IMAGE_URI .
