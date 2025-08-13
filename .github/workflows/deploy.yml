@@ -17,9 +17,9 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: quicknews-2f601
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+            project_id: myapiproject-deployfirst-1
+            service_account_key: ${{ secrets.GCP_SA_KEY }}
+            export_default_credentials: true
 
       - name: Build Docker image
         run: |
